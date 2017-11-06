@@ -74,6 +74,7 @@ namespace cAlgo.Indicators
             // colorize Lines
             ChartObjects.DrawHorizontalLine("68", 68, Colors.Red, 1, LineStyle.Lines);
             ChartObjects.DrawHorizontalLine("63", 63, Colors.OrangeRed, 1, LineStyle.Lines);
+            ChartObjects.DrawHorizontalLine("50", 50, Colors.Orange, 1, LineStyle.Solid);
             ChartObjects.DrawHorizontalLine("37", 37, Colors.PaleGreen, 1, LineStyle.Lines);
             ChartObjects.DrawHorizontalLine("32", 32, Colors.LimeGreen, 1, LineStyle.Lines);
 
@@ -99,16 +100,9 @@ namespace cAlgo.Indicators
             SignalSeries[index] = _signal.Result[index];
 
             //write arrows
-            var volume = MarketSeries.TickVolume[index];
-            var volume1 = MarketSeries.TickVolume[index - 1];
-            double volume2 = MarketSeries.TickVolume[index - 2];
+            
             var high = MarketSeries.High[index];
-            var low = MarketSeries.Low[index];
-            var close = MarketSeries.Close[index];
-            double close1 = MarketSeries.Close[index - 1];
-            double close2 = MarketSeries.Close[index - 2];
-            var currentHighMinusLow = high - low;
-            var previousHighMinusLow = MarketSeries.High[index - 1] - MarketSeries.Low[index - 1];
+            
 
             arrowName = string.Format("bulletSell {0}", index);
             y = high + arrowOffset;
