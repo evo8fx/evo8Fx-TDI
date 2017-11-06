@@ -1,0 +1,7 @@
+﻿C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\bin\Debug\Traders Dynamic Index.dll
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\bin\Debug\Traders Dynamic Index.pdb
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\bin\Debug\cAlgo.API.dll
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\bin\Debug\cAlgo.API.xml
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\obj\Debug\Traders Dynamic Index.csprojResolveAssemblyReference.cache
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\obj\Debug\Traders Dynamic Index.dll
+C:\Users\markd\Documents\cAlgo\Sources\Indicators\Traders Dynamic Index\Traders Dynamic Index\obj\Debug\Traders Dynamic Index.pdb
