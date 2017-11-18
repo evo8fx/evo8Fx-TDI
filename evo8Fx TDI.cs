@@ -13,11 +13,12 @@ namespace cAlgo.Indicators
         private MovingAverage _signal;
         private BollingerBands _bollingerBands;
 
-        private string upArrow = "\u25B2";
-        private string downArrow = "\u25BC";
-        private string diamond = "\u2666";
-        private string bullet = "\u25CF";
+        private string upArrow = "▲";
+        private string downArrow = "▼";
+        private string diamond = "♦";
+        private string bullet = "●";
         private string stop = "x";
+
 
         [Parameter()]
         public DataSeries Source { get; set; }
@@ -59,8 +60,30 @@ namespace cAlgo.Indicators
         public IndicatorDataSeries SignalSeries { get; set; }
 
         private double arrowOffset;
-        private const VerticalAlignment vAlign = VerticalAlignment.Top;
-        private const HorizontalAlignment hAlign = HorizontalAlignment.Center;
+        
+
+        // Elders Impulse ---------------------------------------------------------------
+        private VerticalAlignment vAlign = VerticalAlignment.Bottom;
+        private HorizontalAlignment hAlign = HorizontalAlignment.Center;
+        private ExponentialMovingAverage EMA;
+        private MacdHistogram Mac;
+        private Colors upColor = Colors.DarkGreen;
+        private Colors dnColor = Colors.DarkRed;
+
+        [Parameter("- Show Impulse -------", DefaultValue = true)]
+        public bool enable_EldersImpulse { get; set; }
+
+        [Parameter("Impulse EMA Period", DefaultValue = 13)]
+        public int EMAPeriod { get; set; }
+
+        [Parameter("Impulse LongCycle", DefaultValue = 26)]
+        public int LongCycle { get; set; }
+
+        [Parameter("Impulse ShrtCycle", DefaultValue = 12)]
+        public int ShrtCycle { get; set; }
+
+        [Parameter("Impulse Signal", DefaultValue = 9)]
+        public int Signal { get; set; }
 
         protected override void Initialize()
         {
@@ -78,8 +101,14 @@ namespace cAlgo.Indicators
             ChartObjects.DrawHorizontalLine("37", 37, Colors.PaleGreen, 1, LineStyle.Lines);
             ChartObjects.DrawHorizontalLine("32", 32, Colors.LimeGreen, 1, LineStyle.Lines);
 
+            // Elders Impulse  
+            if (enable_EldersImpulse)
+            {
+                EMA = Indicators.ExponentialMovingAverage(MarketSeries.Close, EMAPeriod);
+                Mac = Indicators.MacdHistogram(LongCycle, ShrtCycle, Signal);
+            }
             // graphic objects
-            arrowOffset = Symbol.PipSize * 5;    
+            arrowOffset = Symbol.PipSize * 5;
 
         }
 
@@ -99,14 +128,36 @@ namespace cAlgo.Indicators
             PriceSeries[index] = _price.Result[index];
             SignalSeries[index] = _signal.Result[index];
 
+            // Elders Impulse
+            if (enable_EldersImpulse)
+            {
+                if (EMA.Result[index] > EMA.Result[index - 1] && Mac.Histogram[index] > Mac.Histogram[index - 1])
+                {
+                    ChartObjects.DrawText("EMA_Dots" + index, bullet, index, 30, vAlign, hAlign, upColor);
+                    ChartObjects.DrawText("MAC_Dots" + index, bullet, index, 26, vAlign, hAlign, upColor);
+                }
+
+                else if (EMA.Result[index] < EMA.Result[index - 1] && Mac.Histogram[index] < Mac.Histogram[index - 1])
+                {
+                    ChartObjects.DrawText("EMA_Dots" + index, bullet, index, 30, vAlign, hAlign, dnColor);
+                    ChartObjects.DrawText("MAC_Dots" + index, bullet, index, 26, vAlign, hAlign, dnColor);
+                }
+                else
+                {
+                    ChartObjects.DrawText("EMA_Dots" + index, bullet, index, 30, vAlign, hAlign, Colors.DimGray);
+                    ChartObjects.DrawText("MAC_Dots" + index, bullet, index, 26, vAlign, hAlign, Colors.DimGray);
+
+                }
+            }
+
             //write arrows
-            
+
             var high = MarketSeries.High[index];
-            
+
 
             arrowName = string.Format("bulletSell {0}", index);
             y = high + arrowOffset;
-            ChartObjects.DrawText(arrowName, bullet, x, y, vAlign, hAlign, Colors.Orange);
+           // ChartObjects.DrawText(arrowName, bullet, x, y, vAlign, hAlign, Colors.Orange);
 
         }
 
