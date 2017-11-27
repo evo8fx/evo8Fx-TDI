@@ -182,14 +182,14 @@ namespace cAlgo.Indicators
             // Price / Signal cross down (above 63)
             if (SignalSeries[index] >= 63 & _price.Result.HasCrossedBelow(_signal.Result, 0)){                
                 arrowName = string.Format("TDI-sell-signal2 {0}", index);
-                y = PriceSeries[index] + 8;
-                ChartObjects.DrawText(arrowName, stop, x, y, vAlign, hAlign, Colors.LightSalmon);
+                y = SignalSeries[index] + 4;
+                ChartObjects.DrawText(arrowName, stop, x, y, vAlign, hAlign, Colors.Gold);
             }
             // Signal / Main Cross down (above 63)
             if (Middle[index] > 63 & _signal.Result.HasCrossedBelow(_bollingerBands.Main, 0)){
                 arrowName = string.Format("TDI-sell-signal3 {0}", index);
                 y = Middle[index] + 6;
-                ChartObjects.DrawText(arrowName, downArrow, x, y, vAlign, hAlign, Colors.OrangeRed);
+                ChartObjects.DrawText(arrowName, downArrow, x, y, vAlign, hAlign, Colors.IndianRed);
             }
             // High Price / Main cross down (above 63)
             if (SignalSeries[index] >= 63 & _price.Result.HasCrossedBelow(_bollingerBands.Main, 0)){
@@ -214,8 +214,8 @@ namespace cAlgo.Indicators
             if (SignalSeries[index] <= 37 & _price.Result.HasCrossedAbove(_signal.Result, 0))
             {
                 arrowName = string.Format("TDI-buy-signal2 {0}", index);
-                y = PriceSeries[index] - 2;
-                ChartObjects.DrawText(arrowName, stop, x, y, vAlign, hAlign, Colors.LightSalmon);
+                y = SignalSeries[index] - 2;
+                ChartObjects.DrawText(arrowName, stop, x, y, vAlign, hAlign, Colors.Gold);
             }
             // Signal / Main Cross up (below 37)
             if (Middle[index] < 37 & _signal.Result.HasCrossedAbove(_bollingerBands.Main, 0))
