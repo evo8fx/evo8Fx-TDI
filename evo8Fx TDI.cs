@@ -96,7 +96,7 @@ namespace cAlgo.Indicators
         protected override void Initialize()
         {
 
-            // TDI Shit
+            // Calculate TDI components
             _rsi = Indicators.RelativeStrengthIndex(Source, RsiPeriod);
             _bollingerBands = Indicators.BollingerBands(_rsi.Result, Volatility, StDev, MovingAverageType.Simple);
             _price = Indicators.MovingAverage(_rsi.Result, PricePeriod, PriceMaType);
@@ -128,7 +128,7 @@ namespace cAlgo.Indicators
             double y;
             string arrowName;
 
-            // output for charting
+            // Output for charting
             Up[index] = _bollingerBands.Top[index];
             Down[index] = _bollingerBands.Bottom[index];
             Middle[index] = _bollingerBands.Main[index];
@@ -136,7 +136,7 @@ namespace cAlgo.Indicators
             PriceSeries[index] = _price.Result[index];
             SignalSeries[index] = _signal.Result[index];
 
-            // Elders Impulse
+            // Output : Elders Impulse
             if (enable_EldersImpulse)
             {
                 if (EMA.Result[index] > EMA.Result[index - 1] && Mac.Histogram[index] > Mac.Histogram[index - 1])
